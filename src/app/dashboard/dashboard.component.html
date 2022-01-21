@@ -1,0 +1,62 @@
+<!-- <p>dashboard works!</p>
+
+<!Doctype html>
+<head>
+    
+
+</head> -->
+<html>
+<body>
+    <main>
+        <div class="container">
+            
+            <button class="btn btn-success" (click)="addPatient()"> + Add patient </button>
+            
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let item of header">{{item | titlecase}}</th>
+                            <th> Actions </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let patient of allPatientDetails" >
+                            <td >{{patient['name']}}</td>
+                            <td >{{patient['age']}}</td>
+                            <td >{{patient['sex']}}</td>
+                            <td >{{patient['checkIn']}}</td>
+                            <td class="d-flex justify-content-around">
+                               <button class="btn"  (click)="edit(patient['id'])"><img src="assets/svg/pencil-fill.svg"/></button> 
+                               <button class="btn" (click)="delete(patient['id'])"><img src="assets/svg/trash.svg"/></button>
+                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg" style="width: 24px;height: 24px;"/></a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+          <div class="modal-content">
+                <div class="modal-header">
+                      <h4 class="modal-title">Model Title</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                    </div>
+           <div class="modal-body">
+                      <p>Model body text</p>
+                    </div>
+                <div class="modal-footer">
+                      <button type="button" class="btn btn-default" (click)="onCloseHandled()" >Close</button>
+                    </div>
+       </div>
+        </div>
+</div>
+
+</html>

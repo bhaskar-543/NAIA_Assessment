@@ -1,0 +1,89 @@
+{
+    "patientDetails": [
+        {
+            "id": 1,
+            "name": "Bhaskar",
+            "age": "20",
+            "sex": "Male",
+            "checkIn": "21/1/2022",
+            "history": {
+                "basicStats": {
+                    "height": 10,
+                    "weight": 20
+                },
+                "smoking": "Non-Smoker",
+                "alcoholDrinking": "Non-Drinker",
+                "drugUsage": [],
+                "surgeries": []
+            }
+        },
+        {
+            "id": 2,
+            "name": "Bhaskar",
+            "age": "20",
+            "sex": "Male",
+            "checkIn": "21/1/2022",
+            "history": {
+                "basicStats": {
+                    "height": 10,
+                    "weight": 20
+                },
+                "smoking": "Non-Smoker",
+                "alcoholDrinking": "Non-Drinker",
+                "drugUsage": [],
+                "surgeries": []
+            }
+        },
+        {
+            "id": 3,
+            "name": "Bhaskar",
+            "age": "20",
+            "sex": "Male",
+            "checkIn": "21/1/2022",
+            "history": {
+                "basicStats": {
+                    "height": 10,
+                    "weight": 20
+                },
+                "smoking": "Non-Smoker",
+                "alcoholDrinking": "Non-Drinker",
+                "drugUsage": [],
+                "surgeries": []
+            }
+        },
+        {
+            "id": 4,
+            "name": "Bhaskar",
+            "age": "20",
+            "sex": "Male",
+            "checkIn": "21/1/2022",
+            "history": {
+                "basicStats": {
+                    "height": 10,
+                    "weight": 20
+                },
+                "smoking": "Non-Smoker",
+                "alcoholDrinking": "Non-Drinker",
+                "drugUsage": [],
+                "surgeries": []
+            }
+        },
+        {
+            "id": 5,
+            "name": "Bhaskar",
+            "age": "20",
+            "sex": "Male",
+            "checkIn": "21/1/2022",
+            "history": {
+                "basicStats": {
+                    "height": 10,
+                    "weight": 20
+                },
+                "smoking": "Non-Smoker",
+                "alcoholDrinking": "Non-Drinker",
+                "drugUsage": [],
+                "surgeries": []
+            }
+        }
+    ]
+}

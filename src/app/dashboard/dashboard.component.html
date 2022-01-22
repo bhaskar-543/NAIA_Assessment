@@ -1,10 +1,4 @@
-<!-- <p>dashboard works!</p>
 
-
-<head>
-    
-
-</head> -->
 <html>
 
 <body>
@@ -29,9 +23,9 @@
                             <td>{{patient['sex']}}</td>
                             <td>{{patient['checkIn']}}</td>
                             <td class="d-flex justify-content-around">
-                                <button class="btn" (click)="edit(editModal,patient['id'])"><img
+                                <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img
                                         src="assets/svg/pencil-fill.svg" /></button>
-                                <button class="btn" (click)="delete(deleteModal,patient['id'])"><img
+                                <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img
                                         src="assets/svg/trash.svg" /></button>
                                 <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg"
                                         style="width: 24px;height: 24px;" /></a>
@@ -64,103 +58,122 @@
     </div>
 </div> -->
 
-<ng-template #editModal>
+<ng-template #editModal >
 
     <div class="modal-header">
         <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/pencil-fill.svg" /> Edit patient</h5>
-        <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
+        <button type="button" class="close pull-right" aria-label="close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <form>
+        <form [formGroup]="patientForm" >
             <div class="mb-3">
                 <label for="editName" class="form-label">* Name</label>
-                <input type="text" class="form-control" id="editName">
+                <input type="text" class="form-control" id="editName" formControlName="name">
+                <div class="text-danger" *ngIf="patientForm.get('name')?.hasError('required') && !patientForm.get('name')?.pristine" >
+                    Name is required
+                </div>
             </div>
             <div class="mb-3">
                 <div class="row">
                     <div class="col-md-4">
                         <label for="editAge" class="form-label">* Age</label>
-                        <input type="number" class="form-control" id="editAge">
+                        <input type="number" class="form-control" id="editAge" formControlName="age">
+                        <div class="text-danger" *ngIf="patientForm.get('age')?.hasError('required') && !patientForm.get('age')?.pristine" >
+                            Age is required
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div>
                         <label for="editAge" class="form-label">Sex</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" name="gender" id="radioMale" checked>
+                            <input type="radio" class="form-check-input" name="sex" id="radioMale" value="male"  formControlName="sex">
                             <label class="form-check-label text-sm" for="radioMale">Male</label>
                         </div>
                         <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
+                            <input type="radio" class="form-check-input" name="sex" id="radioFemale" value="female" formControlName="sex">
                             <label class="form-check-label text-sm" for="radioFemale">Female</label>
                         </div>
                         <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
-                            <label class="form-check-label text-sm" for="radioFemale">UnDisclosed</label>
+                            <input type="radio" class="form-check-input" name="sex" id="UnDisclosed" value="undisclosed" formControlName="sex">
+                            <label class="form-check-label text-sm" for="UnDisclosed">UnDisclosed</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="editCheckin" class="form-label"> * Check-In Date</label>
-                <input type="date" class="form-control" id="editCheckin">
+                <input type="date" class="form-control" id="editCheckin" formControlName="checkIn">
+                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.hasError('required') && !patientForm.get('checkIn')?.pristine" >
+                    checkIn Date is required
+                </div>
             </div>
         </form>
+        
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="true">Save</button>
-        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Close</button>
+        <button type="button" class="btn btn-success" (click)="updatePatientDetails()">Save</button>
+        <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
 </ng-template>
 <ng-template #addPatientModal>
     <div class="modal-header">
         <h4 class="modal-title pull-left"> + Add patient</h4>
-        <button type="button" class="close pull-right btn" aria-label="close" (click)="modalRef.hide()">
+        <button type="button" class="close pull-right btn" aria-label="close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <form>
+        <form [formGroup]="patientForm" (ngSubmit)="savePatient()">
             <div class="mb-3">
                 <label for="editName" class="form-label">* Name</label>
-                <input type="text" class="form-control" id="editName">
+                <input type="text" class="form-control" id="editName" formControlName="name">
+                <div class="text-danger" *ngIf="patientForm.get('name')?.hasError('required') && !patientForm.get('name')?.pristine" >
+                    Name is required
+                </div>
             </div>
             <div class="mb-3">
                 <div class="row">
                     <div class="col-md-4">
                         <label for="editAge" class="form-label">* Age</label>
-                        <input type="number" class="form-control" id="editAge">
+                        <input type="number" class="form-control" id="editAge" formControlName="age">
+                        <div class="text-danger" *ngIf="patientForm.get('age')?.hasError('required') && !patientForm.get('age')?.pristine" >
+                            Age is required
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div>
                         <label for="editAge" class="form-label">Sex</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" name="gender" id="radioMale" checked>
+                            <input type="radio" class="form-check-input" name="sex" id="radioMale" value="male" checked formControlName="sex">
                             <label class="form-check-label text-sm" for="radioMale">Male</label>
                         </div>
                         <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
+                            <input type="radio" class="form-check-input" name="sex" id="radioFemale" value="female" formControlName="sex">
                             <label class="form-check-label text-sm" for="radioFemale">Female</label>
                         </div>
                         <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
-                            <label class="form-check-label text-sm" for="radioFemale">UnDisclosed</label>
+                            <input type="radio" class="form-check-input" name="sex" id="UnDisclosed" value="undisclosed" formControlName="sex">
+                            <label class="form-check-label text-sm" for="UnDisclosed">UnDisclosed</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="editCheckin" class="form-label"> * Check-In Date</label>
-                <input type="date" class="form-control" id="editCheckin">
+                <input type="date" class="form-control" id="editCheckin" formControlName="checkIn">
+                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.hasError('required') && !patientForm.get('checkIn')?.pristine" >
+                    checkIn Date is required
+                </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="true">Save</button>
-        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Close</button>
+        <button type="button" class="btn btn-success" (click)="savePatient()" [disabled]="patientForm.invalid">Save</button>
+        <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
 
 </ng-template>
@@ -168,18 +181,18 @@
     
     <div class="modal-header">
         <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/trash.svg" />  Delete patient</h5>
-        <button type="button" class="close pull-right btn" aria-label="close" (click)="modalRef.hide()">
+        <button type="button" class="close pull-right btn" aria-label="close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <div class="p">
-            Are you sure you want to delete patient-name from the list of patients ?
+            Are you sure you want to delete <span>{{presentPatientDetails['name']}}</span> from the list of patients ?
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="true">yes</button>
-        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deletePatient(presentPatientDetails['id'])">yes</button>
+        <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
 
 

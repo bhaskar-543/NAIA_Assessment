@@ -9,18 +9,26 @@ import { Observable } from 'rxjs';
 })
 export class AppService {
 
-  patientDataUrl : String = "http://localhost:3000/patientDetails";
-  constructor(private http:HttpClient) { }
+  patientDataUrl: String = "http://localhost:3000/patientDetails";
+  constructor(private http: HttpClient) { }
 
-  getPatientDetails(id:number){
-    return this.http.get<patient>(this.patientDataUrl+'/'+id);
+  getPatientDetails(id: number) {
+    return this.http.get<patient>(this.patientDataUrl + '/' + id);
   }
-  getAllPatientDetails(){
-    return this.http.get<patient[]>(this.patientDataUrl+'');
+  getAllPatientDetails() {
+    return this.http.get<patient[]>(this.patientDataUrl + '');
   }
 
-  insertPatientdetails(patient:patient){
-    return this.http.post(this.patientDataUrl+'',patient)
+  insertPatientdetails(patient: patient) {
+    return this.http.post<patient>(this.patientDataUrl + '', patient)
 
+  }
+
+  deletePatientDetails(id: number) {
+    return this.http.delete(this.patientDataUrl + '/' + id);
+  }
+
+  updatePatientDetails(id: number, updateDetails: patient) {
+    return this.http.put(this.patientDataUrl + '/' + id, updateDetails);
   }
 }

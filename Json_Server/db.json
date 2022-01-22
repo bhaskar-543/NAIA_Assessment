@@ -1,89 +1,42 @@
 {
-    "patientDetails": [
-        {
-            "id": 1,
-            "name": "Bhaskar",
-            "age": "20",
-            "sex": "Male",
-            "checkIn": "21/1/2022",
-            "history": {
-                "basicStats": {
-                    "height": 10,
-                    "weight": 20
-                },
-                "smoking": "Non-Smoker",
-                "alcoholDrinking": "Non-Drinker",
-                "drugUsage": [],
-                "surgeries": []
-            }
+  "patientDetails": [
+    {
+      "id": 2,
+      "name": "Bhaskar",
+      "age": "20",
+      "sex": "Male",
+      "checkIn": "21/1/2022",
+      "history": {
+        "basicStats": {
+          "height": 10,
+          "weight": 20
         },
-        {
-            "id": 2,
-            "name": "Bhaskar",
-            "age": "20",
-            "sex": "Male",
-            "checkIn": "21/1/2022",
-            "history": {
-                "basicStats": {
-                    "height": 10,
-                    "weight": 20
-                },
-                "smoking": "Non-Smoker",
-                "alcoholDrinking": "Non-Drinker",
-                "drugUsage": [],
-                "surgeries": []
-            }
-        },
-        {
-            "id": 3,
-            "name": "Bhaskar",
-            "age": "20",
-            "sex": "Male",
-            "checkIn": "21/1/2022",
-            "history": {
-                "basicStats": {
-                    "height": 10,
-                    "weight": 20
-                },
-                "smoking": "Non-Smoker",
-                "alcoholDrinking": "Non-Drinker",
-                "drugUsage": [],
-                "surgeries": []
-            }
-        },
-        {
-            "id": 4,
-            "name": "Bhaskar",
-            "age": "20",
-            "sex": "Male",
-            "checkIn": "21/1/2022",
-            "history": {
-                "basicStats": {
-                    "height": 10,
-                    "weight": 20
-                },
-                "smoking": "Non-Smoker",
-                "alcoholDrinking": "Non-Drinker",
-                "drugUsage": [],
-                "surgeries": []
-            }
-        },
-        {
-            "id": 5,
-            "name": "Bhaskar",
-            "age": "20",
-            "sex": "Male",
-            "checkIn": "21/1/2022",
-            "history": {
-                "basicStats": {
-                    "height": 10,
-                    "weight": 20
-                },
-                "smoking": "Non-Smoker",
-                "alcoholDrinking": "Non-Drinker",
-                "drugUsage": [],
-                "surgeries": []
-            }
-        }
-    ]
+        "smoking": "Non-Smoker",
+        "alcoholDrinking": "Non-Drinker",
+        "drugUsage": [],
+        "surgeries": []
+      }
+    },
+    {
+      "id": 6,
+      "name": "firstPatient",
+      "age": 2,
+      "sex": "female",
+      "checkIn": "06/01/2022"
+    },
+    {
+      "name": "SecondPatient",
+      "age": 2,
+      "sex": "female",
+      "checkIn": "22/01/2022",
+      "id": 7
+    },
+    {
+      "id": 8,
+      "name": "Third patient",
+      "age": 3,
+      "sex": "male",
+      "checkIn": "26/01/2022"
+    }
+  ]
 }

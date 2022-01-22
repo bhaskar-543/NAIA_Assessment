@@ -1,1 +1,184 @@
-<p>history works!</p>
+<!-- <p>history works!</p> -->
+
+<body>
+    <main>
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title pull-left">
+                        <h5> <img style="width: 25px;height: 25px;" src="assets/svg/doctor.svg" />
+                            {{patientDetails['name']}}
+                            History</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <form>
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="form-label" for="basicStats"> Basic Stats </label>
+                            </div>
+                            <div class="row" id="basicStats">
+                                <div class="col-md-4 mx-2">
+                                    <label for="height">*Height (cm): &nbsp;</label>
+                                    <input type="number" id='height' name="height" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label-inline" for="weight">*Weight (KG): &nbsp;</label>
+                                    <input class="form-control-inline" type="number" id='weight' name="height" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label-inline">Body Mass Index:</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="form-label" for="smoking"> * Smoking </label>
+                            </div>
+                            <div id="smoking">
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="smoking" id="heavy Smoker"
+                                        value="option1">
+                                    <label class="form-check-label" for="heavy Smoker">Heavy Smoker </label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="smoking" id="Moderate Smoker"
+                                        value="option2">
+                                    <label class="form-check-label" for="Moderate Smoker">Moderate Smoker</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="smoking" id="Light Smoker"
+                                        value="option3">
+                                    <label class="form-check-label" for="Light Smoker">Light Smoker</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="smoking" id="Casual Smoker"
+                                        value="option2">
+                                    <label class="form-check-label" for="Casual Smoker">Casual Smoker</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="smoking" id="Non-Smoker"
+                                        value="option3">
+                                    <label class="form-check-label" for="Non-Smoker">Non-Smoker</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="form-label" for="drinking"> * Alcohol Drinking </label>
+                            </div>
+                            <div id="drinking">
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="drinking" id="heavy Drinker"
+                                        value="option1">
+                                    <label class="form-check-label" for="heavy Drinker">Heavy Drinker </label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="drinking" id="Moderate Drinker"
+                                        value="option2">
+                                    <label class="form-check-label" for="Moderate Drinker">Moderate Drinker</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="drinking" id="Light Drinker"
+                                        value="option3">
+                                    <label class="form-check-label" for="Light Drinker">Light Drinker</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="drinking" id="Casual Drinker"
+                                        value="option2">
+                                    <label class="form-check-label" for="Casual Drinker">Casual Drinker</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="radio" name="drinking" id="Non-Drinker"
+                                        value="option3">
+                                    <label class="form-check-label" for="Non-Drinker">Non-Drinker</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="form-label" for="drugUsage"> * Drug Usage </label>
+                            </div>
+                            <div id="drugUsage">
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="amphetamines"
+                                        id="Amphetamines" value="option1">
+                                    <label class="form-check-label" for="Amphetamines">Amphetamines </label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Heroine" id="Heroine"
+                                        value="Heroine">
+                                    <label class="form-check-label" for="Heroine">Heroine</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Barbiturates"
+                                        id="Barbiturates" value="Barbiturates">
+                                    <label class="form-check-label" for="Barbiturates">Barbiturates</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Marijuana" id="Marijuana"
+                                        value="option2">
+                                    <label class="form-check-label" for="Marijuana">Marijuana</label>
+                                </div>
+
+                                <label for="drugOthers">Others: &nbsp;</label>
+                                <input type="text" id='drugOthers' name="drugOthers" />
+                                <!-- <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="No Drugs" id="No Drugs"
+                                        value="option3">
+                                    <label class="form-check-label" for="No Drugs">No Drugs</label>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="form-label" for="drugUsage"> Surgeries </label>
+                            </div>
+                            <div id="drugUsage">
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Heart Surgery"
+                                        id="Heart Surgery" value="Heart Surgery">
+                                    <label class="form-check-label" for="Heart Surgery">Heart Surgery</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Breast Surgery"
+                                        id="Breast Surgery" value="Breast Surgery">
+                                    <label class="form-check-label" for="Breast Surgery">Breast Surgery</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Leg Surgery" id="Leg Surgery"
+                                        value="Leg Surgery">
+                                    <label class="form-check-label" for="Leg Surgery">Leg Surgery</label>
+                                </div>
+                                <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="Arm Surgery" id="Arm Surgery"
+                                        value="Arm Surgery">
+                                    <label class="form-check-label" for="Arm Surgery">Arm Surgery</label>
+                                </div>
+                                <label for="drugOthers">Others: &nbsp;</label>
+                                <input type="text" id='drugOthers' name="drugOthers" />
+                                <!-- <div class="form-check form-check-inline mx-3">
+                                    <input class="form-check-input" type="checkbox" name="No Drugs" id="No Drugs"
+                                        value="option3">
+                                    <label class="form-check-label" for="No Drugs">No Drugs</label>
+                                </div> -->
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="d-flex flex-row justify-content-end mt-2">
+
+                <button type="button" class="btn btn-success mx-2" (click)="true">Save</button>
+                <button type="button" class="btn btn-light" routerLink="/dashboard"> Back to Dashboard</button>
+            </div>
+
+        </div>
+    </main>
+</body>

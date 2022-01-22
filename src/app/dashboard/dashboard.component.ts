@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { patient } from './patientModel';
 import { HttpResponse } from '@angular/common/http';
+import { BsModalService,BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,13 +12,13 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class DashboardComponent implements OnInit {
 
-  display = "none";
 
+  modalRef!:BsModalRef ;
   allPatientDetails: patient[] =[];
   header =['name','age','sex','checkin']
 
 
-  constructor(private appService: AppService , private router:Router) { 
+  constructor(private appService: AppService , private router:Router  ,private modalService:BsModalService) { 
   }
 
   ngOnInit(): void {
@@ -31,28 +32,32 @@ export class DashboardComponent implements OnInit {
     // this.addPatient();
   }
 
-  addPatient(){
-    let temp:patient ={
-      name:'temp',
-      age:20,
-      sex:'male',
-      checkIn:'27/04/1998'
-    }
-    this.appService.insertPatientdetails(temp).subscribe((data)=>{
-      console.log("inserted data successfully",data);
-      this.appService.getAllPatientDetails().subscribe(data=>{
-        this.allPatientDetails=data
-      })
+  addPatient(addTemplate:TemplateRef<any>){
+    this.modalService.show(addTemplate);
+    // console.log("patient",id);
+
+    // let temp:patient ={
+    //   name:'temp',
+    //   age:20,
+    //   sex:'male',
+    //   checkIn:'27/04/1998'
+    // }
+    // this.appService.insertPatientdetails(temp).subscribe((data)=>{
+    //   console.log("inserted data successfully",data);
+    //   this.appService.getAllPatientDetails().subscribe(data=>{
+    //     this.allPatientDetails=data
+    //   })
       
-    })
-    console.log("add patient button clicked");
+    // })
+    // console.log("add patient button clicked");
   }
 
-  edit(id?:number){
+  edit(template:TemplateRef<any> ,id?:number){
+    this.modalService.show(template)
     console.log("patient",id);
-    this.display = "block";
   }
-  delete(id?:number){
+  delete(deleteTemplate:TemplateRef<any>,id?:number){
+    this.modalService.show(deleteTemplate)
     console.log("delete",id);
   }
 
@@ -61,11 +66,5 @@ export class DashboardComponent implements OnInit {
     
   }
 
-  openModal() {
-    this.display = "block";
-  }
-  onCloseHandled() {
-    this.display = "none";
-  }
 
 }

@@ -1,17 +1,18 @@
 <!-- <p>dashboard works!</p>
 
-<!Doctype html>
+
 <head>
     
 
 </head> -->
 <html>
+
 <body>
     <main>
         <div class="container">
-            
-            <button class="btn btn-success" (click)="addPatient()"> + Add patient </button>
-            
+
+            <button type="button" class="btn btn-success" (click)="addPatient(addPatientModal)"> + Add patient </button>
+
             <div class="row">
                 <table class="table table-bordered">
                     <thead>
@@ -22,15 +23,18 @@
 
                     </thead>
                     <tbody>
-                        <tr *ngFor="let patient of allPatientDetails" >
-                            <td >{{patient['name']}}</td>
-                            <td >{{patient['age']}}</td>
-                            <td >{{patient['sex']}}</td>
-                            <td >{{patient['checkIn']}}</td>
+                        <tr *ngFor="let patient of allPatientDetails">
+                            <td>{{patient['name']}}</td>
+                            <td>{{patient['age']}}</td>
+                            <td>{{patient['sex']}}</td>
+                            <td>{{patient['checkIn']}}</td>
                             <td class="d-flex justify-content-around">
-                               <button class="btn"  (click)="edit(patient['id'])"><img src="assets/svg/pencil-fill.svg"/></button> 
-                               <button class="btn" (click)="delete(patient['id'])"><img src="assets/svg/trash.svg"/></button>
-                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg" style="width: 24px;height: 24px;"/></a>
+                                <button class="btn" (click)="edit(editModal,patient['id'])"><img
+                                        src="assets/svg/pencil-fill.svg" /></button>
+                                <button class="btn" (click)="delete(deleteModal,patient['id'])"><img
+                                        src="assets/svg/trash.svg" /></button>
+                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg"
+                                        style="width: 24px;height: 24px;" /></a>
                             </td>
                         </tr>
 
@@ -42,21 +46,145 @@
     </main>
 </body>
 
-<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+<!-- <div class="modal" id="dummy" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
     <div class="modal-dialog" role="document">
-          <div class="modal-content">
-                <div class="modal-header">
-                      <h4 class="modal-title">Model Title</h4>
-                      <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
-                    </div>
-           <div class="modal-body">
-                      <p>Model body text</p>
-                    </div>
-                <div class="modal-footer">
-                      <button type="button" class="btn btn-default" (click)="onCloseHandled()" >Close</button>
-                    </div>
-       </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Model Title</h4>
+                <button type="button" class="close" aria-label="Close" (click)="$()"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Model body text</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" (click)="onCloseHandled()">Close</button>
+            </div>
         </div>
-</div>
+    </div>
+</div> -->
+
+<ng-template #editModal>
+
+    <div class="modal-header">
+        <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/pencil-fill.svg" /> Edit patient</h5>
+        <button type="button" class="close pull-right" aria-label="close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="editName" class="form-label">* Name</label>
+                <input type="text" class="form-control" id="editName">
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="editAge" class="form-label">* Age</label>
+                        <input type="number" class="form-control" id="editAge">
+                    </div>
+                    <div class="col-md-8">
+                        <div>
+                        <label for="editAge" class="form-label">Sex</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="gender" id="radioMale" checked>
+                            <label class="form-check-label text-sm" for="radioMale">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
+                            <label class="form-check-label text-sm" for="radioFemale">Female</label>
+                        </div>
+                        <div class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
+                            <label class="form-check-label text-sm" for="radioFemale">UnDisclosed</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="editCheckin" class="form-label"> * Check-In Date</label>
+                <input type="date" class="form-control" id="editCheckin">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="true">Save</button>
+        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Close</button>
+    </div>
+</ng-template>
+<ng-template #addPatientModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"> + Add patient</h4>
+        <button type="button" class="close pull-right btn" aria-label="close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="editName" class="form-label">* Name</label>
+                <input type="text" class="form-control" id="editName">
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="editAge" class="form-label">* Age</label>
+                        <input type="number" class="form-control" id="editAge">
+                    </div>
+                    <div class="col-md-8">
+                        <div>
+                        <label for="editAge" class="form-label">Sex</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="gender" id="radioMale" checked>
+                            <label class="form-check-label text-sm" for="radioMale">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
+                            <label class="form-check-label text-sm" for="radioFemale">Female</label>
+                        </div>
+                        <div class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="gender" id="radioFemale">
+                            <label class="form-check-label text-sm" for="radioFemale">UnDisclosed</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="editCheckin" class="form-label"> * Check-In Date</label>
+                <input type="date" class="form-control" id="editCheckin">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="true">Save</button>
+        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Close</button>
+    </div>
+
+</ng-template>
+<ng-template #deleteModal>
+    
+    <div class="modal-header">
+        <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/trash.svg" />  Delete patient</h5>
+        <button type="button" class="close pull-right btn" aria-label="close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="p">
+            Are you sure you want to delete patient-name from the list of patients ?
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="true">yes</button>
+        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Close</button>
+    </div>
+
+
+
+
+</ng-template>
 
 </html>

@@ -8,35 +8,79 @@
       "checkIn": "21/1/2022",
       "history": {
         "basicStats": {
-          "height": 10,
-          "weight": 20
+          "height": 170,
+          "weight": 75
         },
-        "smoking": "Non-Smoker",
-        "alcoholDrinking": "Non-Drinker",
+        "smoking": "Moderate Smoker",
+        "alcoholDrinking": "Moderate Drinker",
         "drugUsage": [],
-        "surgeries": []
+        "surgeries": [],
+        "otherDrugUsage": "noDurg",
+        "otherSurgery": "NoSurgery"
+      }
+    },
+    {
+      "id": 3,
+      "name": "First Patient",
+      "age": 12,
+      "sex": "Female",
+      "checkIn": "20/01/2022",
+      "history": {
+        "basicStats": {
+          "height": 123,
+          "weight": 12
+        },
+        "smoking": "Moderate Smoker",
+        "alcoholDrinking": "Moderate Drinker",
+        "drugUsage": [
+          "Heroine",
+          "Barbiturates"
+        ],
+        "surgeries": [
+          "Breast Surgery"
+        ],
+        "otherDrugUsage": "noDurg",
+        "otherSurgery": ""
+      }
+    },
+    {
+      "id": 4,
+      "name": "Second Patient",
+      "age": 23,
+      "sex": "Female",
+      "checkIn": "14/01/2022"
+    },
+    {
+      "id": 5,
+      "name": "Third patient",
+      "age": 23,
+      "sex": "Male",
+      "checkIn": "18/01/2022",
+      "history": {
+        "id": "5",
+        "basicStats": {
+          "height": 123,
+          "weight": 13
+        },
+        "smoking": "Moderate Smoker",
+        "alcoholDrinking": "Moderate Drinker",
+        "drugUsage": [
+          "Heroine",
+          "Barbiturates"
+        ],
+        "surgeries": [
+          "Breast Surgery"
+        ],
+        "otherDrugUsage": "noDurg",
+        "otherSurgery": "NoSurgery"
       }
     },
     {
       "id": 6,
-      "name": "firstPatient",
-      "age": 2,
-      "sex": "female",
-      "checkIn": "06/01/2022"
-    },
-    {
-      "name": "SecondPatient",
-      "age": 2,
-      "sex": "female",
-      "checkIn": "22/01/2022",
-      "id": 7
-    },
-    {
-      "id": 8,
-      "name": "Third patient",
-      "age": 3,
-      "sex": "male",
-      "checkIn": "26/01/2022"
+      "name": "vdnk",
+      "age": 12,
+      "sex": "Female",
+      "checkIn": "19/01/2022"
     }
   ]
 }

@@ -1,6 +1,6 @@
 
 export class patientHistory {
-    id?: number;
+    // id?: number;
     basicStats: {
         height: number,
         weight: number
@@ -9,6 +9,8 @@ export class patientHistory {
     alcoholDrinking:string;
     drugUsage:any;
     surgeries:any;
+    otherDrugUsage:string;
+    otherSurgery:string;
     
 
     constructor(obj:any) {
@@ -17,7 +19,8 @@ export class patientHistory {
         this.alcoholDrinking = obj.alcoholDrinking;
         this.drugUsage = obj.drugUsage;
         this.surgeries = obj.surgeries;
-        
+        this.otherDrugUsage =obj.otherDrugUsage;
+        this.otherSurgery = obj.otherSurgery;
 
     }
 }

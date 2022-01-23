@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   modalRef!: BsModalRef;
   allPatientDetails: patient[] = [];
   header = ['name', 'age', 'sex', 'checkin'];
+  genderList =['Male','Female','Undisclosed'];
 
   presentPatientDetails:any;
 
@@ -55,6 +56,13 @@ export class DashboardComponent implements OnInit {
 
   addPatient(addTemplate: TemplateRef<any>) {
     this.modalService.show(addTemplate);
+    this.patientForm = this.formBuilder.group({
+      id: new FormControl(''),
+      name: new FormControl('', Validators.required),
+      age: new FormControl('', Validators.required),
+      sex: new FormControl(''),
+      checkIn: new FormControl('', Validators.required)
+    });
   }
 
   savePatient() {
@@ -171,7 +179,14 @@ export class DashboardComponent implements OnInit {
   }
 
   close() {
-    this.modalService.hide()
+    this.modalService.hide();
+    // this.patientForm = this.formBuilder.group({
+    //   id: new FormControl(''),
+    //   name: new FormControl('', Validators.required),
+    //   age: new FormControl('', Validators.required),
+    //   sex: new FormControl(''),
+    //   checkIn: new FormControl('', Validators.required)
+    // });
   }
 
 

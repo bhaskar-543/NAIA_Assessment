@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { patient } from './dashboard/patientModel';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { patientHistory } from './history/patientHistoryModel';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class AppService {
 
   updatePatientDetails(id: number, updateDetails: patient) {
     return this.http.put(this.patientDataUrl + '/' + id, updateDetails);
+  }
+
+  updatePatientHistoryDetails(id:number,updateHistoryObj:patientHistory){
+    return this.http.patch(this.patientDataUrl + '/'+id,updateHistoryObj)
   }
 }

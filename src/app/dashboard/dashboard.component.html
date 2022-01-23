@@ -5,7 +5,7 @@
     <main>
         <div class="container">
 
-            <button type="button" class="btn btn-success" (click)="addPatient(addPatientModal)"> + Add patient </button>
+            <button type="button" class="btn btn-success mb-2 mt-1" (click)="addPatient(addPatientModal)"> + Add patient </button>
 
             <div class="row">
                 <table class="table table-bordered">
@@ -88,18 +88,11 @@
                         <div>
                         <label for="editAge" class="form-label">Sex</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" name="sex" id="radioMale" value="male"  formControlName="sex">
-                            <label class="form-check-label text-sm" for="radioMale">Male</label>
-                        </div>
-                        <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="sex" id="radioFemale" value="female" formControlName="sex">
-                            <label class="form-check-label text-sm" for="radioFemale">Female</label>
-                        </div>
-                        <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="sex" id="UnDisclosed" value="undisclosed" formControlName="sex">
-                            <label class="form-check-label text-sm" for="UnDisclosed">UnDisclosed</label>
-                        </div>
+                       
+                        <div *ngFor="let item of genderList"  class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="sex" id={{item}} value={{item}} [checked]="presentPatientDetails['sex'] ==item" formControlName="sex">
+                            <label class="form-check-label text-sm" for={{item}}>{{item}}</label>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -114,7 +107,7 @@
         
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="updatePatientDetails()">Save</button>
+        <button type="button" class="btn btn-success" [disabled]="patientForm.invalid" (click)="updatePatientDetails()">Save</button>
         <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
 </ng-template>
@@ -147,18 +140,11 @@
                         <div>
                         <label for="editAge" class="form-label">Sex</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" name="sex" id="radioMale" value="male" checked formControlName="sex">
-                            <label class="form-check-label text-sm" for="radioMale">Male</label>
-                        </div>
-                        <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="sex" id="radioFemale" value="female" formControlName="sex">
-                            <label class="form-check-label text-sm" for="radioFemale">Female</label>
-                        </div>
-                        <div class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="sex" id="UnDisclosed" value="undisclosed" formControlName="sex">
-                            <label class="form-check-label text-sm" for="UnDisclosed">UnDisclosed</label>
-                        </div>
+                        
+                        <div *ngFor="let item of genderList"  class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="sex" id={{item}} value={{item}} [checked]="presentPatientDetails?.sex ==item" formControlName="sex">
+                            <label class="form-check-label text-sm" for={{item}}>{{item}}</label>
+                        </div> 
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
     <main>
         <div class="container">
 
-            <button type="button" class="btn btn-success mb-2 mt-1" (click)="addPatient(addPatientModal)"> + Add patient </button>
+            <button type="button" class="btn btn-success mb-2 mt-1" (click)="addPatient(addPatientModal)"> <span title="Open an Add modal">+</span> Add patient </button>
 
             <div class="row">
                 <table class="table table-bordered">
@@ -23,11 +23,11 @@
                             <td>{{patient['sex']}}</td>
                             <td>{{patient['checkIn']}}</td>
                             <td class="d-flex justify-content-around">
-                                <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img
+                                <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img title="Open an Edit modal"
                                         src="assets/svg/pencil-fill.svg" /></button>
-                                <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img
+                                <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img title="Open the Delete modal"
                                         src="assets/svg/trash.svg" /></button>
-                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg"
+                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg" title="Open the Patient's History page"
                                         style="width: 24px;height: 24px;" /></a>
                             </td>
                         </tr>
@@ -39,7 +39,16 @@
         </div>
     </main>
 </body>
-
+<!-- <div class="container">
+<ag-grid-angular
+style="width: 100%;height: 200px;"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+>
+</ag-grid-angular>
+</div> -->
+<!-- style="width: 500px; height: 500px;" -->
 <!-- <div class="modal" id="dummy" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -68,19 +77,19 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="patientForm" >
-            <div class="mb-3">
+            <div class="mb-3" [ngClass]="(patientForm.get('name')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editName" class="form-label">* Name</label>
                 <input type="text" class="form-control" id="editName" formControlName="name">
-                <div class="text-danger" *ngIf="patientForm.get('name')?.hasError('required') && !patientForm.get('name')?.pristine" >
+                <div class="text-danger" *ngIf="patientForm.get('name')?.invalid && submittedForm" >
                     Name is required
                 </div>
             </div>
             <div class="mb-3">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4" [ngClass]="(patientForm.get('age')?.invalid && submittedForm)?'text-danger':''">
                         <label for="editAge" class="form-label">* Age</label>
                         <input type="number" class="form-control" id="editAge" formControlName="age">
-                        <div class="text-danger" *ngIf="patientForm.get('age')?.hasError('required') && !patientForm.get('age')?.pristine" >
+                        <div class="text-danger" *ngIf="patientForm.get('age')?.invalid && submittedForm" >
                             Age is required
                         </div>
                     </div>
@@ -96,10 +105,10 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" [ngClass]="(patientForm.get('checkIn')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editCheckin" class="form-label"> * Check-In Date</label>
                 <input type="date" class="form-control" id="editCheckin" formControlName="checkIn">
-                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.hasError('required') && !patientForm.get('checkIn')?.pristine" >
+                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.invalid && submittedForm" >
                     checkIn Date is required
                 </div>
             </div>
@@ -107,7 +116,7 @@
         
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" [disabled]="patientForm.invalid" (click)="updatePatientDetails()">Save</button>
+        <button type="button" class="btn btn-success"  (click)="updatePatientDetails()">Save</button>
         <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
 </ng-template>
@@ -120,19 +129,19 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="patientForm" (ngSubmit)="savePatient()">
-            <div class="mb-3">
+            <div class="mb-3" [ngClass]="(patientForm.get('name')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editName" class="form-label">* Name</label>
                 <input type="text" class="form-control" id="editName" formControlName="name">
-                <div class="text-danger" *ngIf="patientForm.get('name')?.hasError('required') && !patientForm.get('name')?.pristine" >
+                <div class="text-danger" *ngIf="patientForm.get('name')?.invalid && submittedForm" >
                     Name is required
                 </div>
             </div>
             <div class="mb-3">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4" [ngClass]="(patientForm.get('age')?.invalid && submittedForm)?'text-danger':''">
                         <label for="editAge" class="form-label">* Age</label>
                         <input type="number" class="form-control" id="editAge" formControlName="age">
-                        <div class="text-danger" *ngIf="patientForm.get('age')?.hasError('required') && !patientForm.get('age')?.pristine" >
+                        <div class="text-danger" *ngIf="patientForm.get('age')?.invalid && submittedForm" >
                             Age is required
                         </div>
                     </div>
@@ -148,17 +157,17 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" [ngClass]="(patientForm.get('checkIn')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editCheckin" class="form-label"> * Check-In Date</label>
                 <input type="date" class="form-control" id="editCheckin" formControlName="checkIn">
-                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.hasError('required') && !patientForm.get('checkIn')?.pristine" >
+                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.invalid && submittedForm" >
                     checkIn Date is required
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="savePatient()" [disabled]="patientForm.invalid">Save</button>
+        <button type="button" class="btn btn-success" (click)="savePatient()" >Save</button>
         <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
 
@@ -180,9 +189,6 @@
         <button type="button" class="btn btn-danger" (click)="deletePatient(presentPatientDetails['id'])">yes</button>
         <button type="button" class="btn btn-light" (click)="close()">Close</button>
     </div>
-
-
-
 
 </ng-template>
 

@@ -7,6 +7,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { elementAt } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,12 +20,14 @@ export class DashboardComponent implements OnInit {
   modalRef!: BsModalRef;
   allPatientDetails: patient[] = [];
   header = ['name', 'age', 'sex', 'checkin'];
-  genderList =['Male','Female','Undisclosed'];
+  genderList = ['Male', 'Female', 'Undisclosed'];
 
-  presentPatientDetails:any;
+  presentPatientDetails: any;
 
   addPatientForm!: patient;
   editPatientForm!: patient;
+
+  submittedForm: boolean = false;
 
   errorMsgs = {
     nameError: false,
@@ -40,7 +44,7 @@ export class DashboardComponent implements OnInit {
   });
 
   constructor(private appService: AppService, private router: Router,
-    private modalService: BsModalService, private formBuilder: FormBuilder) {
+    private modalService: BsModalService, private formBuilder: FormBuilder, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -48,13 +52,14 @@ export class DashboardComponent implements OnInit {
 
       this.allPatientDetails = data;
       console.log("patient Data", data);
-
+     
     })
 
     // this.addPatient();
   }
 
   addPatient(addTemplate: TemplateRef<any>) {
+    this.submittedForm = false;
     this.modalService.show(addTemplate);
     this.patientForm = this.formBuilder.group({
       id: new FormControl(''),
@@ -66,6 +71,10 @@ export class DashboardComponent implements OnInit {
   }
 
   savePatient() {
+    this.submittedForm = true;
+    if (this.patientForm.invalid) {
+      return
+    }
     this.modalService.hide();
 
     this.patientForm.patchValue({
@@ -77,17 +86,10 @@ export class DashboardComponent implements OnInit {
     let insertData: patient = this.patientForm.value;
     this.appService.insertPatientdetails(insertData).subscribe((data) => {
       if (data) {
+        this.toastr.success('New Patient Details added Successfully', 'Success Notification');
         this.allPatientDetails.push(data)
       }
     })
-
-    this.patientForm = this.formBuilder.group({
-      id: new FormControl(''),
-      name: new FormControl('', Validators.required),
-      age: new FormControl('', Validators.required),
-      sex: new FormControl(''),
-      checkIn: new FormControl('', Validators.required)
-    });
 
     // if(this.addPatientForm.name == '' || this.addPatientForm.name.trim().length == 0){
     //   this.errorMsgs.nameError = true
@@ -101,7 +103,11 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  updatePatientDetails(){
+  updatePatientDetails() {
+    this.submittedForm = true;
+    if (this.patientForm.invalid) {
+      return;
+    }
 
     this.modalService.hide();
 
@@ -112,35 +118,29 @@ export class DashboardComponent implements OnInit {
     // console.log("this.addPatientForm", this.patientForm.value);
 
     let updateData: patient = this.patientForm.value;
-    this.appService.updatePatientDetails(this.presentPatientDetails['id'],updateData).subscribe((updateddata) => {
+    this.appService.updatePatientDetails(this.presentPatientDetails['id'], updateData).subscribe((updateddata) => {
       if (updateddata) {
-        console.log("updated successfully",updateddata);
-        this.appService.getAllPatientDetails().subscribe((getData)=>{
+        console.log("updated successfully", updateddata);
+        this.toastr.success('Patient Details updated Successfully', 'Success Notification');
+        this.appService.getAllPatientDetails().subscribe((getData) => {
           this.allPatientDetails = getData;
         })
       }
     })
 
-    this.patientForm = this.formBuilder.group({
-      id: new FormControl(''),
-      name: new FormControl('', Validators.required),
-      age: new FormControl('', Validators.required),
-      sex: new FormControl(''),
-      checkIn: new FormControl('', Validators.required)
-    });
-
   }
 
   openEditModal(template: TemplateRef<any>, id?: number) {
-    
+    this.submittedForm = false;
+
     this.presentPatientDetails = this.allPatientDetails.find(element => element.id == id);
 
     let dateParts = this.presentPatientDetails['checkIn'].split("/");
 
-    let date= new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
-    
-    let tempDate = date.getFullYear()+'-'+(("0" + (date.getMonth() + 1)).slice(-2))+'-'+("0" + date.getDate()).slice(-2) ;
-    
+    let date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+    let tempDate = date.getFullYear() + '-' + (("0" + (date.getMonth() + 1)).slice(-2)) + '-' + ("0" + date.getDate()).slice(-2);
+
 
     this.patientForm = this.formBuilder.group({
       id: new FormControl(this.presentPatientDetails['id']),
@@ -151,24 +151,25 @@ export class DashboardComponent implements OnInit {
     });
 
     this.modalService.show(template);
-    console.log("the form details",this.patientForm);
-    
-    
+    console.log("the form details", this.patientForm);
+
+
   }
 
 
 
   openDeleteModal(deleteTemplate: TemplateRef<any>, id?: number) {
     this.presentPatientDetails = this.allPatientDetails.find(element => element.id == id);
-    
+
     this.modalService.show(deleteTemplate);
   }
-  deletePatient(id:number){
+  deletePatient(id: number) {
     this.modalService.hide();
-    this.appService.deletePatientDetails(id).subscribe((delData)=>{
-      console.log("deleted data",delData);
-      if(delData){
-        this.allPatientDetails = this.allPatientDetails.filter(element => element.id !==id)
+    this.appService.deletePatientDetails(id).subscribe((delData) => {
+      console.log("deleted data", delData);
+      if (delData) {
+        this.toastr.success('Patient Details Deleted Successfully', 'Success Notification');
+        this.allPatientDetails = this.allPatientDetails.filter(element => element.id !== id)
       }
     })
   }

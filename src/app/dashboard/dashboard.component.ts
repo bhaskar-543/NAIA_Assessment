@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
       if (data) {
         this.toastr.success('New Patient Details added Successfully', 'Success Notification');
         this.allPatientDetails.push(data);
-        this.gridApi.refreshView(); //------>for Ag Grid
+        this.gridApi?.refreshView(); //------>for Ag Grid
       }
       else{
         this.toastr.error('Adding Patient Details Failed ', 'Failure Notification')
@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
         this.toastr.success('Patient Details updated Successfully', 'Success Notification');
         this.appService.getAllPatientDetails().subscribe((getData) => {
           this.allPatientDetails = getData;
-          this.gridApi.refreshView();
+          this.gridApi?.refreshView();
         })
       }
       else{

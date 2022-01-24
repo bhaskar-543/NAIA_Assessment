@@ -5,8 +5,7 @@
       "name": "Bhaskar",
       "age": 20,
       "sex": "Male",
-      "checkIn": "21/01/2022",
-      "profilepic": ""
+      "checkIn": "21/01/2022"
     },
     {
       "id": 3,
@@ -81,29 +80,6 @@
       "age": 12,
       "sex": "Male",
       "checkIn": "26/01/2022"
-    },
-    {
-      "id": 9,
-      "name": "newPatient",
-      "age": 23,
-      "sex": "Undisclosed",
-      "checkIn": "27/01/2022",
-      "history": {
-        "basicStats": {
-          "height": 122,
-          "weight": 23
-        },
-        "smoking": "Heavy Smoker",
-        "alcoholDrinking": "Moderate Drinker",
-        "drugUsage": [
-          "Barbiturates"
-        ],
-        "surgeries": [
-          "Leg Surgery"
-        ],
-        "otherDrugUsage": "",
-        "otherSurgery": "NoSurgery"
-      }
     }
   ]
 }

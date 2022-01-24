@@ -109,11 +109,10 @@ export class HistoryComponent implements OnInit {
       if (patchedData) {
         console.log("patched Data", patchedData);
         this.toastr.success('History Details Updated Successfully', 'Success Notification')
-      }
+      }else{
       this.toastr.error('History Details Updation Failed', 'Failure Notification')
+      }
     })
-
-
 
   }
 

@@ -113,6 +113,9 @@ export class DashboardComponent implements OnInit {
         this.allPatientDetails.push(data);
         this.gridApi.refreshView(); //------>for Ag Grid
       }
+      else{
+        this.toastr.error('Adding Patient Details Failed ', 'Failure Notification')
+        }
     })
 
   }
@@ -140,6 +143,9 @@ export class DashboardComponent implements OnInit {
           this.gridApi.refreshView();
         })
       }
+      else{
+        this.toastr.error('Updating Patient Details Failed ', 'Failure Notification')
+        }
     })
 
   }
@@ -188,7 +194,9 @@ export class DashboardComponent implements OnInit {
       if (delData) {
         this.toastr.success('Patient Details Deleted Successfully', 'Success Notification');
         this.allPatientDetails = this.allPatientDetails.filter(element => element.id !== id)
-      }
+      }else{
+        this.toastr.error('Deleting Patient Details Failed ', 'Failure Notification')
+        }
     })
   }
 

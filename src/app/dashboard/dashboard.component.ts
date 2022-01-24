@@ -24,45 +24,39 @@ export class DashboardComponent implements OnInit {
 
   allPatientDetails: patient[] = [];
 
+
   //-----ag grid-------//
-  gridApi:any;
+  gridApi: any;
   columnDefs: ColDef[] = [
 
     { headerName: 'Name', field: 'name' },
     { headerName: 'Age', field: 'age' },
     { headerName: 'Sex', field: 'sex' },
     { headerName: 'Check-in', field: 'checkIn' },
-    { headerName: 'Actions', cellRenderer:
-    function (params) {
-      return  '<div class="grid-action-cell action-button update d-flex justify-content-around" >'+
-      '<img data-action="edit" title="Open an Edit modal" src="assets/svg/pencil-fill.svg" />'+
-      '<img data-action="delete" title="Open the Delete modal" src="assets/svg/trash.svg" />'+
-      '<img data-action="history" src="assets/svg/doctor.svg" title="Open the Patient s History page" style="width: 24px;height: 24px;" />'+
-      '</div>'
-      
-    } 
+    {
+      headerName: 'Actions', cellRenderer:
+        function (params) {
+          return '<div class="grid-action-cell action-button update d-flex justify-content-around" >' +
+            '<img data-action="edit" title="Open an Edit modal" src="assets/svg/pencil-fill.svg" />' +
+            '<img data-action="delete" title="Open the Delete modal" src="assets/svg/trash.svg" />' +
+            '<img data-action="history" src="assets/svg/doctor.svg" title="Open the Patient s History page" style="width: 24px;height: 24px;" />' +
+            '</div>'
+
+        }
     }
   ];
   //---------aggrid----------//
 
-  modalRef!: BsModalRef;
-  // allPatientDetails: patient[] = [];
+  
+  
   header = ['name', 'age', 'sex', 'checkin'];
   genderList = ['Male', 'Female', 'Undisclosed'];
 
   presentPatientDetails: any;
 
-  addPatientForm!: patient;
-  editPatientForm!: patient;
-
   submittedForm: boolean = false;
 
-  errorMsgs = {
-    nameError: false,
-    ageError: false,
-    checkInError: false
-  }
-
+  
   patientForm = this.formBuilder.group({
     id: new FormControl(''),
     name: new FormControl('', Validators.required),
@@ -82,12 +76,14 @@ export class DashboardComponent implements OnInit {
       console.log("patient Data", data);
     })
 
-    // this.addPatient();
   }
 
-  addPatient(addTemplate: TemplateRef<any>) {
+  openAddPatientModal(addPatientTemplate: TemplateRef<any>) {
     this.submittedForm = false;
-    this.modalService.show(addTemplate);
+    this.modalService.show(addPatientTemplate, {
+      backdrop: 'static',
+      keyboard: false
+    });
     this.patientForm = this.formBuilder.group({
       id: new FormControl(''),
       name: new FormControl('', Validators.required),
@@ -108,14 +104,14 @@ export class DashboardComponent implements OnInit {
       checkIn: new DatePipe('en-US').transform(this.patientForm.get('checkIn')?.value, 'dd/MM/yyyy')
     })
 
-    console.log("this.addPatientForm", this.patientForm.value);
+    console.log("this.PatientForm", this.patientForm.value);
 
-    let insertData: patient = this.patientForm.value;
-    this.appService.insertPatientdetails(insertData).subscribe((data) => {
+    let saveObj: patient = this.patientForm.value;
+    this.appService.insertPatientdetails(saveObj).subscribe((data) => {
       if (data) {
         this.toastr.success('New Patient Details added Successfully', 'Success Notification');
         this.allPatientDetails.push(data);
-        this.gridApi.refreshView();
+        this.gridApi.refreshView(); //------>for Ag Grid
       }
     })
 
@@ -133,7 +129,6 @@ export class DashboardComponent implements OnInit {
       checkIn: new DatePipe('en-US').transform(this.patientForm.get('checkIn')?.value, 'dd/MM/yyyy')
     })
 
-    // console.log("this.addPatientForm", this.patientForm.value);
 
     let updateData: patient = this.patientForm.value;
     this.appService.updatePatientDetails(this.presentPatientDetails['id'], updateData).subscribe((updateddata) => {
@@ -167,8 +162,10 @@ export class DashboardComponent implements OnInit {
       checkIn: new FormControl(tempDate, Validators.required)
     });
 
-    this.modalService.show(template);
-    console.log("the form details", this.patientForm);
+    this.modalService.show(template, {
+      backdrop: 'static',
+      keyboard: false
+    });
 
 
   }
@@ -178,7 +175,11 @@ export class DashboardComponent implements OnInit {
   openDeleteModal(deleteTemplate: TemplateRef<any>, id?: number) {
     this.presentPatientDetails = this.allPatientDetails.find(element => element.id == id);
 
-    this.modalService.show(deleteTemplate);
+
+    this.modalService.show(deleteTemplate, {
+      backdrop: 'static',
+      keyboard: false
+    });
   }
   deletePatient(id: number) {
     this.modalService.hide();
@@ -191,31 +192,31 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  history(id?: number) {
-    console.log('history', id);
-
-  }
-
   close() {
     this.modalService.hide();
-    
+
   }
 
-  
-  onCellClicked(params:any){
+
+  // ------------------ For Ag Grid Table ----------------------//
+
+
+  onCellClicked(params: any) {
     let action = params.event.target.dataset.action
-    
-    if(action == 'edit'){
-      this.openEditModal(this.edit_Template,params.data.id)
-    }else if(action == 'delete'){
+
+    if (action == 'edit') {
+      this.openEditModal(this.edit_Template, params.data.id)
+    } else if (action == 'delete') {
       this.openDeleteModal(this.delete_Template, params.data.id)
-    }else if(action == 'history'){
-      this.router.navigateByUrl('/history/'+params.data.id)
+    } else if (action == 'history') {
+      this.router.navigateByUrl('/history/' + params.data.id)
     }
   }
-  onGridReady(params:any){
+  onGridReady(params: any) {
     this.gridApi = params.api;
   }
+
+   // ------------------ For Ag Grid Table ----------------------//
 
 
 }

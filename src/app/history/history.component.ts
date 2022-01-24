@@ -25,7 +25,7 @@ export class HistoryComponent implements OnInit {
   profilePic !: File;
 
   submittedForm:boolean = false;
-  // drugErrorMessage:boolean = false;
+ 
 
   constructor(private route: ActivatedRoute, private appService: AppService,
     private formBuilder: FormBuilder, private toastr: ToastrService,private modalService: BsModalService) { }
@@ -73,7 +73,7 @@ export class HistoryComponent implements OnInit {
 
   saveHistoryDetails() {
     this.submittedForm = true;
-    if(this.historyForm.invalid){
+    if(this.historyForm.invalid || this.checkDrugUsageError()){
       return;
     }
     console.log("History form ", this.historyForm.value);
@@ -113,6 +113,20 @@ export class HistoryComponent implements OnInit {
       return 'BMI'
     }
   }
+
+  checkDrugUsageError(){    
+    let checkBoxesError = this.historyForm.get('drugUsage')?.value.findIndex((user: boolean) => user === true) == -1;
+    let otherfieldError = this.historyForm.get('otherDrugUsage')?.value == '' || this.historyForm.get('otherDrugUsage')?.value== undefined
+
+    if(checkBoxesError && otherfieldError){
+      return true
+    }else{
+      return false
+    }
+  }
+
+// -------------------- for ProfilePic ---------------- //
+  
   close() {
     this.modalService.hide();
     
@@ -127,17 +141,7 @@ export class HistoryComponent implements OnInit {
     
   }
 
-  checkDrugUsageError(){    
-    let checkBoxesError = this.historyForm.get('drugUsage')?.value.findIndex((user: boolean) => user === true) == -1;
-    let otherfieldError = this.historyForm.get('otherDrugUsage')?.value == '' || this.historyForm.get('otherDrugUsage')?.value== undefined
-
-    if(checkBoxesError && otherfieldError){
-      return true
-    }else{
-      return false
-    }
-   
-  }
+ 
 
 
 

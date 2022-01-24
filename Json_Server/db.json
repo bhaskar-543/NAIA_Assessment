@@ -51,7 +51,23 @@
       "name": "newPatient",
       "age": 23,
       "sex": "Undisclosed",
-      "checkIn": "27/01/2022"
+      "checkIn": "27/01/2022",
+      "history": {
+        "basicStats": {
+          "height": 122,
+          "weight": 23
+        },
+        "smoking": "Heavy Smoker",
+        "alcoholDrinking": "Moderate Drinker",
+        "drugUsage": [
+          "Barbiturates"
+        ],
+        "surgeries": [
+          "Leg Surgery"
+        ],
+        "otherDrugUsage": "",
+        "otherSurgery": "NoSurgery"
+      }
     }
   ]
 }

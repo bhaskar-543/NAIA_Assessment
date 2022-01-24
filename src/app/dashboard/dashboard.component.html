@@ -1,47 +1,43 @@
-<html>
+<div class="container">
+    <button type="button" class="btn btn-success mb-2 mt-1" (click)="openAddPatientModal(addPatientModal)"> <span
+            title="Open an Add modal">+</span> Add patient </button>
 
-<body>
-    <main>
-        <div class="container">
+    <div class="row">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="bg-primary">
+                    <th *ngFor="let item of header">{{item | titlecase}}</th>
+                    <th class="text-center"> Actions </th>
+                </tr>
 
-            <button type="button" class="btn btn-success mb-2 mt-1" (click)="addPatient(addPatientModal)"> <span
-                    title="Open an Add modal">+</span> Add patient </button>
+            </thead>
+            <tbody>
+                <tr class="table-primary" *ngFor="let patient of allPatientDetails">
+                    <td>{{patient['name']}}</td>
+                    <td>{{patient['age']}}</td>
+                    <td>{{patient['sex']}}</td>
+                    <td>{{patient['checkIn']}}</td>
+                    <td class="d-flex justify-content-around">
+                        <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img
+                                title="Open an Edit modal" src="assets/svg/pencil-fill.svg" /></button>
+                        <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img
+                                title="Open the Delete modal" src="assets/svg/trash.svg" /></button>
+                        <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg"
+                                title="Open the Patient's History page" style="width: 24px;height: 24px;" /></a>
+                    </td>
+                </tr>
 
-            <div class="row">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr class="bg-primary">
-                            <th *ngFor="let item of header">{{item | titlecase}}</th>
-                            <th> Actions </th>
-                        </tr>
+            </tbody>
 
-                    </thead>
-                    <tbody>
-                        <tr class="table-primary" *ngFor="let patient of allPatientDetails">
-                            <td>{{patient['name']}}</td>
-                            <td>{{patient['age']}}</td>
-                            <td>{{patient['sex']}}</td>
-                            <td>{{patient['checkIn']}}</td>
-                            <td class="d-flex justify-content-around">
-                                <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img
-                                        title="Open an Edit modal" src="assets/svg/pencil-fill.svg" /></button>
-                                <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img
-                                        title="Open the Delete modal" src="assets/svg/trash.svg" /></button>
-                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg"
-                                        title="Open the Patient's History page" style="width: 24px;height: 24px;" /></a>
-                            </td>
-                        </tr>
+        </table>
+    </div>
+</div>
 
-                    </tbody>
 
-                </table>
-            </div>
-        </div>
-    </main>
-</body>
 <div class="container ag-theme-alpine" *ngIf=''>
-    <ag-grid-angular domLayout='autoHeight' style="width: 90%;height: 100%;" class="ag-theme-alpine" [rowData]="allPatientDetails"
-        [columnDefs]="columnDefs" (cellClicked)="onCellClicked($event)" (gridReady)="onGridReady($event)">
+    <ag-grid-angular domLayout='autoHeight' style="width: 90%;height: 100%;" class="ag-theme-alpine"
+        [rowData]="allPatientDetails" [columnDefs]="columnDefs" (cellClicked)="onCellClicked($event)"
+        (gridReady)="onGridReady($event)">
     </ag-grid-angular>
 </div>
 <!-- <ag-grid-angular style="width: 100%;height: 200px;" class="ag-theme-alpine"
@@ -171,7 +167,7 @@
     </div>
     <div class="modal-body">
         <div class="p">
-            Are you sure you want to delete <span>{{presentPatientDetails['name']}}</span> from the list of patients ?
+            Are you sure you want to delete <strong>{{presentPatientDetails['name']}}</strong> from the list of patients ?
         </div>
     </div>
     <div class="modal-footer">
@@ -180,5 +176,3 @@
     </div>
 
 </ng-template>
-
-</html>

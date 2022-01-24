@@ -9,8 +9,6 @@
                         <h5> <img style="width: 25px;height: 25px;" src="assets/svg/doctor.svg" />
                             {{patientDetails?patientDetails['name']:''}}
                             History</h5>
-
-                        <!-- <button class="btn btn-secondary">upload</button> -->
                     </div>
                     <!-- <div class="pull-right">
                         <button class="btn btn-success" (click)="openUploadModal(uploadImage)">Upload</button>
@@ -21,17 +19,14 @@
                     <form [formGroup]="historyForm">
                         <div class="mb-2">
                             <div class="row">
-                                <label class="form-label" for="basicStats"><strong> Basic Stats</strong> </label>
+                                <label class="form-label" for="basicStats" [ngClass]="((historyForm.get('basicStats')?.invalid) && submittedForm)?'text-danger':''">
+                                    <strong> Basic Stats</strong> </label>
                             </div>
                             <div class="row" id="basicStats" formGroupName='basicStats'>
 
                                 <div class="col-md-4 mx-2 " [ngClass]="(historyForm.get('basicStats')?.get('height')?.invalid && submittedForm)?'text-danger':''">
                                     <label for="height">*Height (cm): &nbsp;</label>
                                     <input type="number" id='height' name="height"  formControlName="height" />
-                                    <!-- <div class="text-danger mx-1"
-                                        *ngIf="historyForm.get('basicStats')?.get('height')?.hasError('required') && !historyForm.get('basicStats')?.get('height')?.pristine">
-                                        Please Enter height
-                                    </div> -->
                                     <div class="text-danger mx-1"
                                         *ngIf="historyForm.get('basicStats')?.get('height')?.invalid && submittedForm">
                                         Please Enter height
@@ -42,10 +37,6 @@
                                     <label class="form-label-inline" for="weight">*Weight (KG): &nbsp;</label>
                                     <input class="form-control-inline" type="number" id='weight' name="height"
                                         formControlName='weight' />
-                                    <!-- <div class="text-danger mx-1"
-                                        *ngIf="historyForm.get('basicStats')?.get('weight')?.hasError('required') && !historyForm.get('basicStats')?.get('weight')?.pristine">
-                                        Please Enter weight
-                                    </div> -->
                                     <div class="text-danger mx-1"
                                         *ngIf="historyForm.get('basicStats')?.get('weight')?.invalid && submittedForm">
                                         Please Enter height
@@ -152,6 +143,8 @@
         </div>
     </main>
 </body>
+
+<!-- -------------- Added for Profile Pic -->
 
 <ng-template #uploadImage>
 

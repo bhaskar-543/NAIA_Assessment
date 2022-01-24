@@ -110,7 +110,7 @@ export class HistoryComponent implements OnInit {
         console.log("patched Data", patchedData);
         this.toastr.success('History Details Updated Successfully', 'Success Notification')
       }
-
+      this.toastr.error('History Details Updation Failed', 'Failure Notification')
     })
 
 
@@ -159,7 +159,10 @@ export class HistoryComponent implements OnInit {
   }
 
   openUploadModal(uploadTemplate: TemplateRef<any>) {
-    this.modalService.show(uploadTemplate);
+    this.modalService.show(uploadTemplate,{
+      backdrop: 'static',
+      keyboard: false
+    });
 
   }
   saveProfilePicture() {
@@ -177,6 +180,15 @@ export class HistoryComponent implements OnInit {
 
     this.appService.uploadProfilePicture(saveProfilePicObj, this.id).subscribe(data => {
       console.log("image Uploaded", data);
+      if(data){
+      if(saveProfilePicObj['profilepic']){
+        this.toastr.success('Profile Picture saved Successfully')
+      }else{
+        this.toastr.success('Profile Picture removed Successfully')
+      }
+    }else{
+      this.toastr.error('Profile Picture  Updation Failed', 'Failure Notification')
+    }
     })
 
   }

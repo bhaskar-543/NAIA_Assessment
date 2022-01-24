@@ -1,34 +1,34 @@
-
 <html>
 
 <body>
     <main>
         <div class="container">
 
-            <button type="button" class="btn btn-success mb-2 mt-1" (click)="addPatient(addPatientModal)"> <span title="Open an Add modal">+</span> Add patient </button>
+            <button type="button" class="btn btn-success mb-2 mt-1" (click)="addPatient(addPatientModal)"> <span
+                    title="Open an Add modal">+</span> Add patient </button>
 
             <div class="row">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-striped">
                     <thead>
-                        <tr>
+                        <tr class="bg-primary">
                             <th *ngFor="let item of header">{{item | titlecase}}</th>
                             <th> Actions </th>
                         </tr>
 
                     </thead>
                     <tbody>
-                        <tr *ngFor="let patient of allPatientDetails">
+                        <tr class="table-primary" *ngFor="let patient of allPatientDetails">
                             <td>{{patient['name']}}</td>
                             <td>{{patient['age']}}</td>
                             <td>{{patient['sex']}}</td>
                             <td>{{patient['checkIn']}}</td>
                             <td class="d-flex justify-content-around">
-                                <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img title="Open an Edit modal"
-                                        src="assets/svg/pencil-fill.svg" /></button>
-                                <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img title="Open the Delete modal"
-                                        src="assets/svg/trash.svg" /></button>
-                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg" title="Open the Patient's History page"
-                                        style="width: 24px;height: 24px;" /></a>
+                                <button class="btn" (click)="openEditModal(editModal,patient['id'])"><img
+                                        title="Open an Edit modal" src="assets/svg/pencil-fill.svg" /></button>
+                                <button class="btn" (click)="openDeleteModal(deleteModal,patient['id'])"><img
+                                        title="Open the Delete modal" src="assets/svg/trash.svg" /></button>
+                                <a routerLink="/history/{{patient.id}}"> <img src="assets/svg/doctor.svg"
+                                        title="Open the Patient's History page" style="width: 24px;height: 24px;" /></a>
                             </td>
                         </tr>
 
@@ -39,84 +39,70 @@
         </div>
     </main>
 </body>
-<!-- <div class="container">
-<ag-grid-angular
-style="width: 100%;height: 200px;"
-    class="ag-theme-alpine"
-    [rowData]="rowData"
-    [columnDefs]="columnDefs"
->
-</ag-grid-angular>
-</div> -->
-<!-- style="width: 500px; height: 500px;" -->
-<!-- <div class="modal" id="dummy" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Model Title</h4>
-                <button type="button" class="close" aria-label="Close" (click)="$()"><span
-                        aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <p>Model body text</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="onCloseHandled()">Close</button>
-            </div>
-        </div>
-    </div>
-</div> -->
+<div class="container ag-theme-alpine" *ngIf=''>
+    <ag-grid-angular domLayout='autoHeight' style="width: 90%;height: 100%;" class="ag-theme-alpine" [rowData]="allPatientDetails"
+        [columnDefs]="columnDefs" (cellClicked)="onCellClicked($event)" (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+</div>
+<!-- <ag-grid-angular style="width: 100%;height: 200px;" class="ag-theme-alpine"
+    [gridOptions]="gridOptions">
+</ag-grid-angular> -->
 
-<ng-template #editModal >
+
+
+<ng-template #editModal>
 
     <div class="modal-header">
-        <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/pencil-fill.svg" /> Edit patient</h5>
+        <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/pencil-fill.svg" />
+            Edit patient</h5>
         <button type="button" class="close pull-right" aria-label="close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="patientForm" >
+        <form [formGroup]="patientForm">
             <div class="mb-3" [ngClass]="(patientForm.get('name')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editName" class="form-label">* Name</label>
                 <input type="text" class="form-control" id="editName" formControlName="name">
-                <div class="text-danger" *ngIf="patientForm.get('name')?.invalid && submittedForm" >
+                <div class="text-danger" *ngIf="patientForm.get('name')?.invalid && submittedForm">
                     Name is required
                 </div>
             </div>
             <div class="mb-3">
                 <div class="row">
-                    <div class="col-md-4" [ngClass]="(patientForm.get('age')?.invalid && submittedForm)?'text-danger':''">
+                    <div class="col-md-4"
+                        [ngClass]="(patientForm.get('age')?.invalid && submittedForm)?'text-danger':''">
                         <label for="editAge" class="form-label">* Age</label>
                         <input type="number" class="form-control" id="editAge" formControlName="age">
-                        <div class="text-danger" *ngIf="patientForm.get('age')?.invalid && submittedForm" >
+                        <div class="text-danger" *ngIf="patientForm.get('age')?.invalid && submittedForm">
                             Age is required
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div>
-                        <label for="editAge" class="form-label">Sex</label>
+                            <label for="editAge" class="form-label">Sex</label>
                         </div>
-                       
-                        <div *ngFor="let item of genderList"  class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="sex" id={{item}} value={{item}} [checked]="presentPatientDetails['sex'] ==item" formControlName="sex">
+
+                        <div *ngFor="let item of genderList" class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="sex" id={{item}} value={{item}}
+                                [checked]="presentPatientDetails['sex'] ==item" formControlName="sex">
                             <label class="form-check-label text-sm" for={{item}}>{{item}}</label>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="mb-3" [ngClass]="(patientForm.get('checkIn')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editCheckin" class="form-label"> * Check-In Date</label>
                 <input type="date" class="form-control" id="editCheckin" formControlName="checkIn">
-                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.invalid && submittedForm" >
+                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.invalid && submittedForm">
                     checkIn Date is required
                 </div>
             </div>
         </form>
-        
+
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success"  (click)="updatePatientDetails()">Save</button>
+        <button type="button" class="btn btn-success" (click)="updatePatientDetails()">Save</button>
         <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
     </div>
 </ng-template>
@@ -132,50 +118,53 @@ style="width: 100%;height: 200px;"
             <div class="mb-3" [ngClass]="(patientForm.get('name')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editName" class="form-label">* Name</label>
                 <input type="text" class="form-control" id="editName" formControlName="name">
-                <div class="text-danger" *ngIf="patientForm.get('name')?.invalid && submittedForm" >
+                <div class="text-danger" *ngIf="patientForm.get('name')?.invalid && submittedForm">
                     Name is required
                 </div>
             </div>
             <div class="mb-3">
                 <div class="row">
-                    <div class="col-md-4" [ngClass]="(patientForm.get('age')?.invalid && submittedForm)?'text-danger':''">
+                    <div class="col-md-4"
+                        [ngClass]="(patientForm.get('age')?.invalid && submittedForm)?'text-danger':''">
                         <label for="editAge" class="form-label">* Age</label>
                         <input type="number" class="form-control" id="editAge" formControlName="age">
-                        <div class="text-danger" *ngIf="patientForm.get('age')?.invalid && submittedForm" >
+                        <div class="text-danger" *ngIf="patientForm.get('age')?.invalid && submittedForm">
                             Age is required
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div>
-                        <label for="editAge" class="form-label">Sex</label>
+                            <label for="editAge" class="form-label">Sex</label>
                         </div>
-                        
-                        <div *ngFor="let item of genderList"  class="form-check form-check-inline ms-3">
-                            <input type="radio" class="form-check-input" name="sex" id={{item}} value={{item}} [checked]="presentPatientDetails?.sex ==item" formControlName="sex">
+
+                        <div *ngFor="let item of genderList" class="form-check form-check-inline ms-3">
+                            <input type="radio" class="form-check-input" name="sex" id={{item}} value={{item}}
+                                [checked]="presentPatientDetails?.sex ==item" formControlName="sex">
                             <label class="form-check-label text-sm" for={{item}}>{{item}}</label>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="mb-3" [ngClass]="(patientForm.get('checkIn')?.invalid && submittedForm)?'text-danger':''">
                 <label for="editCheckin" class="form-label"> * Check-In Date</label>
                 <input type="date" class="form-control" id="editCheckin" formControlName="checkIn">
-                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.invalid && submittedForm" >
+                <div class="text-danger" *ngIf="patientForm.get('checkIn')?.invalid && submittedForm">
                     checkIn Date is required
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="savePatient()" >Save</button>
+        <button type="button" class="btn btn-success" (click)="savePatient()">Save</button>
         <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
     </div>
 
 </ng-template>
 <ng-template #deleteModal>
-    
+
     <div class="modal-header">
-        <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/trash.svg" />  Delete patient</h5>
+        <h5 class="modal-title pull-left"><img style="width: 25px;height: 25px;" src="assets/svg/trash.svg" /> Delete
+            patient</h5>
         <button type="button" class="close pull-right btn" aria-label="close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>

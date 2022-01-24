@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { patient } from './patientModel';
@@ -17,8 +17,36 @@ import { ColDef } from 'ag-grid-community';
 })
 export class DashboardComponent implements OnInit {
 
-  modalRef!: BsModalRef;
+
+  @ViewChild("editModal") edit_Template!: TemplateRef<any>;
+  @ViewChild("addPatientModal") add_Template!: TemplateRef<any>;
+  @ViewChild("deleteModal") delete_Template!: TemplateRef<any>;
+
   allPatientDetails: patient[] = [];
+
+  //-----ag grid-------//
+  gridApi:any;
+  columnDefs: ColDef[] = [
+
+    { headerName: 'Name', field: 'name' },
+    { headerName: 'Age', field: 'age' },
+    { headerName: 'Sex', field: 'sex' },
+    { headerName: 'Check-in', field: 'checkIn' },
+    { headerName: 'Actions', cellRenderer:
+    function (params) {
+      return  '<div class="grid-action-cell action-button update d-flex justify-content-around" >'+
+      '<img data-action="edit" title="Open an Edit modal" src="assets/svg/pencil-fill.svg" />'+
+      '<img data-action="delete" title="Open the Delete modal" src="assets/svg/trash.svg" />'+
+      '<img data-action="history" src="assets/svg/doctor.svg" title="Open the Patient s History page" style="width: 24px;height: 24px;" />'+
+      '</div>'
+      
+    } 
+    }
+  ];
+  //---------aggrid----------//
+
+  modalRef!: BsModalRef;
+  // allPatientDetails: patient[] = [];
   header = ['name', 'age', 'sex', 'checkin'];
   genderList = ['Male', 'Female', 'Undisclosed'];
 
@@ -52,7 +80,6 @@ export class DashboardComponent implements OnInit {
 
       this.allPatientDetails = data;
       console.log("patient Data", data);
-     
     })
 
     // this.addPatient();
@@ -87,19 +114,10 @@ export class DashboardComponent implements OnInit {
     this.appService.insertPatientdetails(insertData).subscribe((data) => {
       if (data) {
         this.toastr.success('New Patient Details added Successfully', 'Success Notification');
-        this.allPatientDetails.push(data)
+        this.allPatientDetails.push(data);
+        this.gridApi.refreshView();
       }
     })
-
-    // if(this.addPatientForm.name == '' || this.addPatientForm.name.trim().length == 0){
-    //   this.errorMsgs.nameError = true
-    // }
-    // if(this.addPatientForm.age == 0 || this.addPatientForm.age == undefined){
-    //   this.errorMsgs.ageError = true
-    // }
-    // if(this.addPatientForm.checkIn == '' || this.addPatientForm.checkIn == undefined){
-    //   this.errorMsgs.checkInError = true
-    // }
 
   }
 
@@ -124,6 +142,7 @@ export class DashboardComponent implements OnInit {
         this.toastr.success('Patient Details updated Successfully', 'Success Notification');
         this.appService.getAllPatientDetails().subscribe((getData) => {
           this.allPatientDetails = getData;
+          this.gridApi.refreshView();
         })
       }
     })
@@ -136,9 +155,7 @@ export class DashboardComponent implements OnInit {
     this.presentPatientDetails = this.allPatientDetails.find(element => element.id == id);
 
     let dateParts = this.presentPatientDetails['checkIn'].split("/");
-
     let date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
     let tempDate = date.getFullYear() + '-' + (("0" + (date.getMonth() + 1)).slice(-2)) + '-' + ("0" + date.getDate()).slice(-2);
 
 
@@ -181,13 +198,23 @@ export class DashboardComponent implements OnInit {
 
   close() {
     this.modalService.hide();
-    // this.patientForm = this.formBuilder.group({
-    //   id: new FormControl(''),
-    //   name: new FormControl('', Validators.required),
-    //   age: new FormControl('', Validators.required),
-    //   sex: new FormControl(''),
-    //   checkIn: new FormControl('', Validators.required)
-    // });
+    
+  }
+
+  
+  onCellClicked(params:any){
+    let action = params.event.target.dataset.action
+    
+    if(action == 'edit'){
+      this.openEditModal(this.edit_Template,params.data.id)
+    }else if(action == 'delete'){
+      this.openDeleteModal(this.delete_Template, params.data.id)
+    }else if(action == 'history'){
+      this.router.navigateByUrl('/history/'+params.data.id)
+    }
+  }
+  onGridReady(params:any){
+    this.gridApi = params.api;
   }
 
 

@@ -64,10 +64,8 @@ export class HistoryComponent implements OnInit {
               otherDrugUsage: new FormControl(this.patientDetails.history?.otherDrugUsage),
               otherSurgery: new FormControl(this.patientDetails.history?.otherSurgery),
             });
-
           }
-          console.log("patient history data", this.patientHistory);
-
+          
         }
       })
     })

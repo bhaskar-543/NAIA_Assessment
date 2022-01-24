@@ -5,7 +5,17 @@ import { AppService } from '../app.service';
 import { patient } from '../dashboard/patientModel';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { BsModalService,BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+
+const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 
 @Component({
   selector: 'app-history',
@@ -24,11 +34,11 @@ export class HistoryComponent implements OnInit {
   id!: number;
   profilePic !: File;
 
-  submittedForm:boolean = false;
- 
+  submittedForm: boolean = false;
+
 
   constructor(private route: ActivatedRoute, private appService: AppService,
-    private formBuilder: FormBuilder, private toastr: ToastrService,private modalService: BsModalService) { }
+    private formBuilder: FormBuilder, private toastr: ToastrService, private modalService: BsModalService) { }
 
 
   historyForm = this.formBuilder.group({
@@ -65,7 +75,10 @@ export class HistoryComponent implements OnInit {
               otherSurgery: new FormControl(this.patientDetails.history?.otherSurgery),
             });
           }
-          
+          if (data['profilepic']) {
+            this.fileList.push(data['profilepic'])
+          }
+
         }
       })
     })
@@ -73,7 +86,7 @@ export class HistoryComponent implements OnInit {
 
   saveHistoryDetails() {
     this.submittedForm = true;
-    if(this.historyForm.invalid || this.checkDrugUsageError()){
+    if (this.historyForm.invalid || this.checkDrugUsageError()) {
       return;
     }
     console.log("History form ", this.historyForm.value);
@@ -114,34 +127,73 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  checkDrugUsageError(){    
+  checkDrugUsageError() {
     let checkBoxesError = this.historyForm.get('drugUsage')?.value.findIndex((user: boolean) => user === true) == -1;
-    let otherfieldError = this.historyForm.get('otherDrugUsage')?.value == '' || this.historyForm.get('otherDrugUsage')?.value== undefined
+    let otherfieldError = this.historyForm.get('otherDrugUsage')?.value == '' || this.historyForm.get('otherDrugUsage')?.value == undefined
 
-    if(checkBoxesError && otherfieldError){
+    if (checkBoxesError && otherfieldError) {
       return true
-    }else{
+    } else {
       return false
     }
   }
 
-// -------------------- for ProfilePic ---------------- //
-  
+  // -------------------- for ProfilePic ---------------- //
+
+  fileList: NzUploadFile[] = []
+  previewImage: string | undefined = '';
+  previewVisible = false;
+
+  handlePreview = async (file: NzUploadFile): Promise<void> => {
+    if (!file.url && !file['preview']) {
+      file['preview'] = await getBase64(file.originFileObj!);
+    }
+    this.previewImage = file.url || file['preview'];
+    this.previewVisible = true;
+  };
+
+
   close() {
     this.modalService.hide();
-    
+
   }
 
-  openUploadModal(uploadTemplate:TemplateRef<any>){
+  openUploadModal(uploadTemplate: TemplateRef<any>) {
     this.modalService.show(uploadTemplate);
 
   }
-  uploadProfilePic(){
-    console.log("---->file",this.profilePic);
-    
+  saveProfilePicture() {
+    console.log("-------------->image", this.fileList.length);
+    console.log("-------------->image", typeof (this.fileList[0]));
+
+    let saveProfilePicObj: any = {};
+    if (this.fileList.length === 1) {
+      saveProfilePicObj['profilepic'] = this.fileList[0];
+    } else {
+      console.log("---------------------------->inside",);
+      
+      saveProfilePicObj['profilepic'] = ''
+    }
+
+    this.appService.uploadProfilePicture(saveProfilePicObj, this.id).subscribe(data => {
+      console.log("image Uploaded", data);
+    })
+
+  }
+  uploadfile() {
+    console.log("helloo");
+    return "yes"
+
+
+  }
+  UPLOAD_FILE = '';
+  beforeUpload = (file: NzUploadFile): boolean => {
+    // Judgment on the upload file type
+    const type = file.type;
+    return false
   }
 
- 
+
 
 
 

@@ -7,6 +7,7 @@ export class patient {
     sex: string;
     checkIn: string;
     history?:patientHistory;
+    profilepic?:any;
 
     constructor(obj:any) {
         this.id = (obj.id)? obj.id :undefined;
@@ -14,7 +15,8 @@ export class patient {
         this.age = obj.age;
         this.sex = obj.sex;
         this.checkIn = obj.checkIn;
-        this.history = obj.history
+        this.history = obj.history;
+        this.profilepic = obj.profilepic
 
     }
 }

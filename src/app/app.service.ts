@@ -36,4 +36,10 @@ export class AppService {
   updatePatientHistoryDetails(id:number,updateHistoryObj:patientHistory){
     return this.http.patch(this.patientDataUrl + '/'+id,updateHistoryObj)
   }
+
+  uploadProfilePicture(upladObj:any,id:number){
+     return this.http.patch(this.patientDataUrl+'/'+id,upladObj)
+  }
+
+
 }

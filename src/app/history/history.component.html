@@ -5,12 +5,24 @@
         <div class="container mt-3">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title pull-left">
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h5> <img style="width: 25px;height: 25px;" src="assets/svg/doctor.svg" />
+                                {{patientDetails?patientDetails['name']:''}}
+                                History</h5>
+                        </div>
+                        <div class="col-md-2 float-right">
+                            <button class="btn btn-primary" (click)="openUploadModal(uploadImage)">Upload</button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="card-title pull-left">
                         <h5> <img style="width: 25px;height: 25px;" src="assets/svg/doctor.svg" />
                             {{patientDetails?patientDetails['name']:''}}
                             History</h5>
                     </div>
-                    <!-- <div class="pull-right">
+                    <div class="d-flex justify-content-end">
                         <button class="btn btn-success" (click)="openUploadModal(uploadImage)">Upload</button>
                     </div> -->
                 </div>
@@ -19,21 +31,24 @@
                     <form [formGroup]="historyForm">
                         <div class="mb-2">
                             <div class="row">
-                                <label class="form-label" for="basicStats" [ngClass]="((historyForm.get('basicStats')?.invalid) && submittedForm)?'text-danger':''">
+                                <label class="form-label" for="basicStats"
+                                    [ngClass]="((historyForm.get('basicStats')?.invalid) && submittedForm)?'text-danger':''">
                                     <strong> Basic Stats</strong> </label>
                             </div>
                             <div class="row" id="basicStats" formGroupName='basicStats'>
 
-                                <div class="col-md-4 mx-2 " [ngClass]="(historyForm.get('basicStats')?.get('height')?.invalid && submittedForm)?'text-danger':''">
+                                <div class="col-md-4 mx-2 "
+                                    [ngClass]="(historyForm.get('basicStats')?.get('height')?.invalid && submittedForm)?'text-danger':''">
                                     <label for="height">*Height (cm): &nbsp;</label>
-                                    <input type="number" id='height' name="height"  formControlName="height" />
+                                    <input type="number" id='height' name="height" formControlName="height" />
                                     <div class="text-danger mx-1"
                                         *ngIf="historyForm.get('basicStats')?.get('height')?.invalid && submittedForm">
                                         Please Enter height
                                     </div>
 
                                 </div>
-                                <div class="col-md-4" [ngClass]="(historyForm.get('basicStats')?.get('weight')?.invalid && submittedForm)?'text-danger':''">
+                                <div class="col-md-4"
+                                    [ngClass]="(historyForm.get('basicStats')?.get('weight')?.invalid && submittedForm)?'text-danger':''">
                                     <label class="form-label-inline" for="weight">*Weight (KG): &nbsp;</label>
                                     <input class="form-control-inline" type="number" id='weight' name="height"
                                         formControlName='weight' />
@@ -51,12 +66,14 @@
                             </div>
                         </div>
                         <div class="mb-2">
-                            <div class="row" [ngClass]="(historyForm.get('smoking')?.invalid && submittedForm) ?'text-danger':''">
+                            <div class="row"
+                                [ngClass]="(historyForm.get('smoking')?.invalid && submittedForm) ?'text-danger':''">
                                 <label class="form-label" for="smoking"> <strong>* Smoking </strong>
-                                <span *ngIf="historyForm.get('smoking')?.invalid && submittedForm" class="text-danger">
-                                    - This field is Required
-                                </span>
-                            </label>
+                                    <span *ngIf="historyForm.get('smoking')?.invalid && submittedForm"
+                                        class="text-danger">
+                                        - This field is Required
+                                    </span>
+                                </label>
                             </div>
                             <div id="smoking">
                                 <div *ngFor="let item of smokingDetails" class="form-check form-check-inline ms-3">
@@ -65,18 +82,20 @@
                                         formControlName="smoking">
                                     <label class="form-check-label text-sm" for={{item}}>{{item}}</label>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="mb-2">
-                            <div class="row" [ngClass]="(historyForm.get('alcoholDrinking')?.invalid && submittedForm)?'text-danger':''">
-                                <label class="form-label" for="drinking"><strong>* Alcohol Drinking </strong> 
-                                <span *ngIf="historyForm.get('alcoholDrinking')?.invalid && submittedForm" class="text-danger">
-                                    - This field is Required
-                                </span>
-                            </label>
+                            <div class="row"
+                                [ngClass]="(historyForm.get('alcoholDrinking')?.invalid && submittedForm)?'text-danger':''">
+                                <label class="form-label" for="drinking"><strong>* Alcohol Drinking </strong>
+                                    <span *ngIf="historyForm.get('alcoholDrinking')?.invalid && submittedForm"
+                                        class="text-danger">
+                                        - This field is Required
+                                    </span>
+                                </label>
                             </div>
-                            
+
                             <div id="drinking">
                                 <div *ngFor="let item of drinkingDetails" class="form-check form-check-inline ms-3">
                                     <input type="radio" class="form-check-input" name="alcoholDrinking" id={{item}}
@@ -84,19 +103,19 @@
                                         formControlName="alcoholDrinking">
                                     <label class="form-check-label text-sm" for={{item}}>{{item}}</label>
                                 </div>
-                                
+
                             </div>
                         </div>
 
                         <div class="mb-2">
                             <div class="row" [ngClass]="(checkDrugUsageError() && submittedForm)?'text-danger':''">
                                 <label class="form-label" for="drugUsage"><strong> * Drug Usage </strong>
-                                <span *ngIf="checkDrugUsageError() && submittedForm" class="text-danger">
-                                    - This field is Required
-                                </span>
-                            </label>
+                                    <span *ngIf="checkDrugUsageError() && submittedForm" class="text-danger">
+                                        - This field is Required
+                                    </span>
+                                </label>
                             </div>
-                            <div id="drugUsage"  >
+                            <div id="drugUsage">
                                 <div *ngFor="let drug of drugsDetails;let i =index"
                                     class="form-check form-check-inline ms-3" formArrayName='drugUsage'>
                                     <input type="checkbox" class="form-check-input" id={{drug}} value={{drug}}
@@ -155,13 +174,25 @@
         </button>
     </div>
     <div class="modal-body">
-        <input type="file" [(ngModel)]='profilePic' />
+        <!-- <input type="file" [(ngModel)]='profilePic' />
         <button type="button" class="btn btn-primary" (click)="uploadProfilePic()">Upload</button>
-        <button type="button" class="btn"><img src="assets/svg/trash.svg" /></button>
+        <button type="button" class="btn"><img src="assets/svg/trash.svg" /></button> -->
+        <nz-upload nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="picture-card"
+            [(nzFileList)]="fileList" [nzShowButton]="fileList.length <1" [nzPreview]="handlePreview">
+            <div>
+                <i nz-icon nzType="plus"></i>
+                <div style="width:100px;height:100px;border:1px solid;margin-top: 8px"> + Upload</div>
+            </div>
+        </nz-upload>
+
+
+        <!-- <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+        </ng-template> -->
 
     </div>
     <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-danger" (click)="deletePatient(presentPatientDetails['id'])">yes</button> -->
+        <button type="button" class="btn btn-success" (click)="saveProfilePicture()">Save</button>
         <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
     </div>
 

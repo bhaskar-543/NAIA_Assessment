@@ -13,7 +13,8 @@
                                 History</h5>
                         </div>
                         <div class="col-md-2 float-right">
-                            <button class="btn btn-primary" (click)="openUploadModal(uploadImage)">Profile Picture</button>
+                            <button class="btn btn-primary" (click)="openUploadModal(uploadImage)">Profile
+                                Picture</button>
                         </div>
                     </div>
 
@@ -177,14 +178,19 @@
         <!-- <input type="file" [(ngModel)]='profilePic' />
         <button type="button" class="btn btn-primary" (click)="uploadProfilePic()">Upload</button>
         <button type="button" class="btn"><img src="assets/svg/trash.svg" /></button> -->
-        <nz-upload nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="picture-card"
+        <nz-upload nzAction='nothing' nzListType="picture"
             [(nzFileList)]="fileList" [nzShowButton]="fileList.length <1" [nzPreview]="handlePreview">
             <div>
                 <i nz-icon nzType="plus"></i>
                 <div style="width:100px;height:100px;border:1px solid;margin-top: 8px"> + Upload</div>
             </div>
         </nz-upload>
-
+        <!-- <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+            (nzOnCancel)="previewVisible = false">
+            <ng-template #modalContent>
+                <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+            </ng-template>
+        </nz-modal> -->
 
         <!-- <ng-template #modalContent>
             <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />

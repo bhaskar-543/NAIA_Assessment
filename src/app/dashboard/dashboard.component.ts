@@ -134,6 +134,8 @@ export class DashboardComponent implements OnInit {
 
 
     let updateData: patient = this.patientForm.value;
+    updateData['history'] = this.presentPatientDetails.history
+    updateData['profilepic'] = this.presentPatientDetails.profilepic
     this.appService.updatePatientDetails(this.presentPatientDetails['id'], updateData).subscribe((updateddata) => {
       if (updateddata) {
         console.log("updated successfully", updateddata);

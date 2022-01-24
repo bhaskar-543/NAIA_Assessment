@@ -144,13 +144,16 @@ export class HistoryComponent implements OnInit {
   previewVisible = false;
 
   handlePreview = async (file: NzUploadFile): Promise<void> => {
+
     if (!file.url && !file['preview']) {
-      file['preview'] = await getBase64(file.originFileObj!);
+
+      console.log("image file");
+      
     }
     this.previewImage = file.url || file['preview'];
     this.previewVisible = true;
   };
-
+  
 
   close() {
     this.modalService.hide();
@@ -165,14 +168,11 @@ export class HistoryComponent implements OnInit {
 
   }
   saveProfilePicture() {
-    console.log("-------------->image", this.fileList.length);
-    console.log("-------------->image", typeof (this.fileList[0]));
-
+    
     let saveProfilePicObj: any = {};
     if (this.fileList.length === 1) {
       saveProfilePicObj['profilepic'] = this.fileList[0];
     } else {
-      console.log("---------------------------->inside",);
       
       saveProfilePicObj['profilepic'] = ''
     }
@@ -191,21 +191,6 @@ export class HistoryComponent implements OnInit {
     })
 
   }
-  uploadfile() {
-    console.log("helloo");
-    return "yes"
-
-
-  }
-  UPLOAD_FILE = '';
-  beforeUpload = (file: NzUploadFile): boolean => {
-    // Judgment on the upload file type
-    const type = file.type;
-    return false
-  }
-
-
-
-
+  
 
 }
